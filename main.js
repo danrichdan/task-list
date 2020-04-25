@@ -23,8 +23,20 @@ function createList() {
   const tasks = JSON.parse(localStorage.getItem("tasks"));
   tasks.forEach((task) => {
     let listItem = document.createElement("li");
+    let deleteBtn = document.createElement("button");
+    // let closeIcon = document.createElement("span");
+    // closeIcon.setAttribute("aria-hidden", "true");
+    // closeIcon.textContent = "&times;";
+    // deleteBtn.className = "close";
+    deleteBtn.setAttribute("type", "button");
+    deleteBtn.setAttribute("aria-label", "Close");
+    deleteBtn.innerHTML = `<button type="button" class="close ml-auto" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>`;
+    // deleteBtn.appendChild(closeIcon);
     listItem.className = "list-group-item";
     listItem.textContent = task;
+    listItem.appendChild(deleteBtn);
     console.log(task);
     list.appendChild(listItem);
   });
