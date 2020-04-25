@@ -30,9 +30,7 @@ function createList() {
     // deleteBtn.className = "close";
     deleteBtn.setAttribute("type", "button");
     deleteBtn.setAttribute("aria-label", "Close");
-    deleteBtn.innerHTML = `<button type="button" class="close ml-auto" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>`;
+    deleteBtn.innerHTML = `<span aria-hidden="true">&times;</span>`;
     // deleteBtn.appendChild(closeIcon);
     listItem.className = "list-group-item";
     listItem.textContent = task;
