@@ -1,64 +1,44 @@
-// Global Variables
-const taskField = document.querySelector(".task-field");
-const taskBtn = document.querySelector(".task-button");
-const taskListSection = document.querySelector(".task-list-section .card-body");
-const itemArray = [];
+document.querySelector(".task-button").addEventListener("click", function () {
+  addToStorage();
+  createAndDisplayList();
+});
 
-taskBtn.addEventListener("click", addTask);
-
-function addTask() {
-  let task = taskField.value;
-  if (task == "") {
-    alert("Please enter a value");
+function addToStorage() {
+  const taskField = document.getElementById("task");
+  const task = taskField.value;
+  taskField.value = "";
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
   } else {
-    taskListSection.innerHTML = "";
-    itemArray.push(task);
-    taskField.value = "";
-    addListToDom(itemArray);
+    tasks = JSON.parse(localStorage.getItem("tasks"));
   }
+  tasks.push(task);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-function createDeleteBtn() {
-  let deleteBtn = document.createElement("button");
-  deleteBtn.className = "close";
-  deleteBtn.setAttribute("type", "button");
-  deleteBtn.innerHTML = "<span aria-hidden='true'>&times;</span>";
-  deleteItem(itemArray, deleteBtn);
-  return deleteBtn;
-}
-
-function createListItem(itemArray, i) {
-  let listItem = document.createElement("li");
-  listItem.className = "list-group-item";
-  listItem.id = i;
-  listItem.textContent = itemArray[i];
-  return listItem;
-}
-
-function createList(itemArray) {
-  let ul = document.createElement("ul");
-  ul.className = "list-group";
-
-  for (let i = 0; i < itemArray.length; i++) {
-    let listItem = createListItem(itemArray, i);
-    let deleteBtn = createDeleteBtn();
-    listItem.appendChild(deleteBtn);
-    ul.appendChild(listItem);
-  }
-  return ul;
-}
-
-function addListToDom(itemArray) {
-  let ul = createList(itemArray);
-  taskListSection.appendChild(ul);
-}
-
-function deleteItem(itemArray, deleteBtn) {
-  deleteBtn.addEventListener("click", function (e) {
-    let self = e.target.parentElement.parentElement;
-    itemArray.splice(self.id, 1);
-    self.remove();
-    taskListSection.innerHTML = "";
-    addListToDom(itemArray);
+function createList() {
+  const list = document.createElement("ul");
+  list.className = "list-group";
+  const tasks = JSON.parse(localStorage.getItem("tasks"));
+  tasks.forEach((task) => {
+    let listItem = document.createElement("li");
+    listItem.className = "list-group-item";
+    listItem.textContent = task;
+    console.log(task);
+    list.appendChild(listItem);
   });
+  console.log(list);
+  return list;
+}
+
+function addListToDom(list) {
+  const listDiv = document.getElementById("list-div");
+  listDiv.innerHTML = "";
+  listDiv.appendChild(list);
+}
+
+function createAndDisplayList() {
+  const list = createList();
+  addListToDom(list);
 }
