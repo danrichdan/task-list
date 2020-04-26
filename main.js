@@ -1,3 +1,8 @@
+// ON PAGE LOAD
+if (localStorage.getItem("tasks") != null) {
+  createAndDisplayList();
+}
+
 // 'ADD' BUTTON FUNTIONALITY
 document.querySelector(".task-button").addEventListener("click", function () {
   const taskField = document.getElementById("task");
@@ -117,8 +122,3 @@ function delBtn() {
   deleteBtn.innerHTML = `<span aria-hidden="true">&times;</span>`;
   return deleteBtn;
 }
-
-// Function call on page load
-// Consider they might have local storage for other applications -- research this
-// So if tasks is null, remove all items and then display some message
-// Else display the list
